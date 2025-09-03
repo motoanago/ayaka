@@ -23,8 +23,10 @@ button:hover { background:#0056b3; }
   <label>日: <select name="day" required></select></label>
   <label>コメント: <textarea name="comment" rows="3"></textarea></label>
   <label>パスワード: <input type="password" name="password" required></label>
-  <!-- BOT用の罠 -->
+  
+  <!-- BOT用の罠（非表示） -->
   <input type="text" name="trap" style="display:none">
+
   <button type="submit">送信</button>
 </form>
 
@@ -39,12 +41,12 @@ for (let m=1; m<=12; m++){
   let opt = document.createElement("option"); opt.value=m; opt.textContent=m; monthSelect.appendChild(opt);
 }
 
-// 日プルダウン
+// 日プルダウン（月変更時に更新）
 function updateDays(){
   daySelect.innerHTML="";
   const month = monthSelect.value;
   if(!month) return;
-  const lastDay = new Date(2024, month, 0).getDate(); // 年は固定（閏年考慮済）
+  const lastDay = new Date(2024, month, 0).getDate(); // 年は固定（閏年を考慮）
   for(let d=1; d<=lastDay; d++){
     let opt = document.createElement("option"); opt.value=d; opt.textContent=d; daySelect.appendChild(opt);
   }
