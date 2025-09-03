@@ -64,7 +64,7 @@ form.addEventListener("submit", async e=>{
     password: form.password.value,
     trap: form.trap.value
   };
-  const scriptURL = "【Apps ScriptのデプロイURLをここに貼る】";
+  const scriptURL = "https://script.google.com/macros/s/AKfycbwfVH9vjTqvpvPMhGcGLxEGw72tW2OADqi1mKLHRhMVqIGpv3ah8ovE_S1an2RPg9KUbw/exec";
   const res = await fetch(scriptURL, {
     method:"POST",
     body:JSON.stringify(data),
@@ -82,3 +82,4 @@ form.addEventListener("submit", async e=>{
 
 </body>
 </html>
+
