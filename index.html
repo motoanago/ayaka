@@ -21,11 +21,11 @@
     const form = document.getElementById('birthdayForm');
     form.addEventListener('submit', function(e) {
       e.preventDefault();
-      
+
       const formData = new FormData(form);
       const params = new URLSearchParams(formData);
-      
-      fetch("YOUR_GAS_WEBAPP_URL_HERE", {  https://script.google.com/macros/s/AKfycbx-RoaL8L3bHr00d6bROJRv8UqmUw-8Vorkl3O4lNaq6RxflQ2-vnxXrzQp8ZudxjNq/exec
+
+      fetch("https://script.google.com/macros/s/AKfycbx-RoaL8L3bHr00d6bROJRv8UqmUw-8Vorkl3O4lNaq6RxflQ2-vnxXrzQp8ZudxjNq/exec", {
         method: "POST",
         body: params
       })
@@ -45,4 +45,3 @@
   </script>
 </body>
 </html>
-
