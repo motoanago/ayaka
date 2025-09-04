@@ -88,7 +88,7 @@
 </head>
 <body>
 <div class="container">
-  <h2>あやか推し？</h2
+  <h2>あやか推し？</h2>
   <h2>お名前と誕生日を入力してね</h2>
 
   <form id="birthdayForm">
@@ -109,6 +109,10 @@ const result = document.getElementById('result');
 form.addEventListener('submit', function(e) {
   e.preventDefault();
 
+  // 入力欄とボタンをすべて無効化（グレーアウト）
+  const elements = form.querySelectorAll("input, textarea, button");
+  elements.forEach(el => el.disabled = true);
+
   const formData = new FormData(form);
   const params = new URLSearchParams(formData);
 
@@ -127,14 +131,19 @@ form.addEventListener('submit', function(e) {
     } else {
       result.textContent = "送信失敗: " + data.message;
       result.style.color = "red";
+
+      // エラーなら再入力できるように解除
+      elements.forEach(el => el.disabled = false);
     }
   })
   .catch(err => {
     result.textContent = "通信エラー: " + err;
     result.style.color = "red";
+
+    // エラーなら再入力できるように解除
+    elements.forEach(el => el.disabled = false);
   });
 });
 </script>
 </body>
 </html>
-
