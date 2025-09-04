@@ -1,63 +1,138 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>誕生日入力フォーム</title>
-  <style>
-    body { font-family: sans-serif; margin: 40px; }
-    label { display: block; margin-top: 10px; }
-    input { margin-left: 5px; }
-    button { margin-top: 15px; padding: 5px 15px; }
-    #result { margin-top: 20px; font-weight: bold; color: green; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>誕生日メモ入力フォーム</title>
+<style>
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+    text-align: center; /* 文字中央揃え */
+  }
+
+  .container {
+    width: 100%;
+    max-width: 400px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-top: 10px;
+    text-align: left; /* ラベルは左揃えで見やすく */
+  }
+
+  input, textarea {
+    width: 100%;
+    margin-top: 5px;
+    padding: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+
+  textarea {
+    height: 3em; /* メモ欄高さ3倍 */
+  }
+
+  button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    background-color: #4CAF50;
+    color: #fff;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+
+  #result {
+    margin-top: 20px;
+    font-weight: bold;
+    color: green;
+    white-space: pre-line; /* 改行を有効に */
+    text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      padding: 20px;
+    }
+
+    input, textarea, button {
+      font-size: 14px;
+    }
+  }
+</style>
 </head>
 <body>
-  <h2>あなたのお名前と誕生日を教えてね</h2>
+<div class="container">
+  <h2>あなたのお名前と誕生日を入力してね</h2>
 
   <form id="birthdayForm">
     <label>名前: <input type="text" name="name" required></label>
     <label>誕生月: <input type="number" name="month" min="1" max="12" required></label>
     <label>誕生日: <input type="number" name="day" min="1" max="31" required></label>
-    <label>メモ: <input type="text" name="memo"></label>
+    <label>応援コメ: <textarea name="memo"></textarea></label>
     <button type="submit">あやかに教える</button>
   </form>
 
   <p id="result"></p>
+</div>
 
-  <script>
-    const form = document.getElementById('birthdayForm');
-    const result = document.getElementById('result');
+<script>
+const form = document.getElementById('birthdayForm');
+const result = document.getElementById('result');
 
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
 
-      const formData = new FormData(form);
-      const params = new URLSearchParams(formData);
+  const formData = new FormData(form);
+  const params = new URLSearchParams(formData);
 
-      fetch("https://script.google.com/macros/s/AKfycbx-RoaL8L3bHr00d6bROJRv8UqmUw-8Vorkl3O4lNaq6RxflQ2-vnxXrzQp8ZudxjNq/exec", {
-        method: "POST",
-        body: params
-      })
-      .then(res => res.json())
-      .then(data => {
-        if(data.status === "success") {
-          // フォームを非表示
-          form.style.display = "none";
+  fetch("https://script.google.com/macros/s/AKfycbx-RoaL8L3bHr00d6bROJRv8UqmUw-8Vorkl3O4lNaq6RxflQ2-vnxXrzQp8ZudxjNq/exec", {
+    method: "POST",
+    body: params
+  })
+  .then(res => res.json())
+  .then(data => {
+    if(data.status === "success") {
+      // フォームを非表示
+      form.style.display = "none";
 
-          // 完了メッセージを表示
-          result.textContent = "登録完了！<br>教えてくれてありがとう！";
-        } else {
-          result.textContent = "送信失敗: " + data.message;
-          result.style.color = "red";
-        }
-      })
-      .catch(err => {
-        result.textContent = "通信エラー: " + err;
-        result.style.color = "red";
-      });
-    });
-  </script>
+      // 完了メッセージを表示（改行あり）
+      result.textContent = "登録が完了したよ\n教えてくれてありがとう\n誕生日には一緒に祝おうね！";
+    } else {
+      result.textContent = "送信失敗: " + data.message;
+      result.style.color = "red";
+    }
+  })
+  .catch(err => {
+    result.textContent = "通信エラー: " + err;
+    result.style.color = "red";
+  });
+});
+</script>
 </body>
 </html>
-
