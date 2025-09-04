@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>誕生日メモ入力フォーム</title>
+  <title>誕生日入力フォーム</title>
   <style>
     body { font-family: sans-serif; margin: 40px; }
     label { display: block; margin-top: 10px; }
@@ -13,14 +13,14 @@
   </style>
 </head>
 <body>
-  <h2>誕生日メモ入力フォーム</h2>
+  <h2>あなたのお名前と誕生日を教えてね</h2>
 
   <form id="birthdayForm">
     <label>名前: <input type="text" name="name" required></label>
     <label>誕生月: <input type="number" name="month" min="1" max="12" required></label>
     <label>誕生日: <input type="number" name="day" min="1" max="31" required></label>
     <label>メモ: <input type="text" name="memo"></label>
-    <button type="submit">送信</button>
+    <button type="submit">あやかに教える</button>
   </form>
 
   <p id="result"></p>
@@ -60,3 +60,4 @@
   </script>
 </body>
 </html>
+
