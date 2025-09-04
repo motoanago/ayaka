@@ -4,14 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>誕生日メモ入力フォーム</title>
+  <style>
+    body { font-family: sans-serif; margin: 40px; }
+    label { display: block; margin-top: 10px; }
+    input { margin-left: 5px; }
+    button { margin-top: 15px; padding: 5px 15px; }
+    #result { margin-top: 20px; font-weight: bold; color: green; }
+  </style>
 </head>
 <body>
   <h2>誕生日メモ入力フォーム</h2>
+
   <form id="birthdayForm">
-    <label>名前: <input type="text" name="name" required></label><br>
-    <label>誕生月: <input type="number" name="month" min="1" max="12" required></label><br>
-    <label>誕生日: <input type="number" name="day" min="1" max="31" required></label><br>
-    <label>メモ: <input type="text" name="memo"></label><br>
+    <label>名前: <input type="text" name="name" required></label>
+    <label>誕生月: <input type="number" name="month" min="1" max="12" required></label>
+    <label>誕生日: <input type="number" name="day" min="1" max="31" required></label>
+    <label>メモ: <input type="text" name="memo"></label>
     <button type="submit">送信</button>
   </form>
 
@@ -19,6 +27,8 @@
 
   <script>
     const form = document.getElementById('birthdayForm');
+    const result = document.getElementById('result');
+
     form.addEventListener('submit', function(e) {
       e.preventDefault();
 
@@ -32,14 +42,19 @@
       .then(res => res.json())
       .then(data => {
         if(data.status === "success") {
-          document.getElementById("result").textContent = "送信成功！";
-          form.reset();
+          // フォームを非表示
+          form.style.display = "none";
+
+          // 完了メッセージを表示
+          result.textContent = "登録完了！<br>教えてくれてありがとう！";
         } else {
-          document.getElementById("result").textContent = "送信失敗: " + data.message;
+          result.textContent = "送信失敗: " + data.message;
+          result.style.color = "red";
         }
       })
       .catch(err => {
-        document.getElementById("result").textContent = "通信エラー: " + err;
+        result.textContent = "通信エラー: " + err;
+        result.style.color = "red";
       });
     });
   </script>
