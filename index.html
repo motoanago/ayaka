@@ -8,11 +8,14 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            margin-top: 100px;
+            margin-top: 50px;
+        }
+        .button-container {
+            margin-bottom: 40px;
         }
         button {
             padding: 15px 30px;
-            margin: 20px;
+            margin: 10px 0;
             font-size: 18px;
             cursor: pointer;
             border: none;
@@ -24,12 +27,38 @@
         button:hover {
             background-color: #45a049;
         }
+        .description {
+            max-width: 500px;
+            margin: 10px auto 30px auto;
+            font-size: 14px;
+            line-height: 1.6;
+            text-align: left;
+            background-color: #f9f9f9;
+            padding: 10px 15px;
+            border-radius: 6px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
-    <h1>あやか枠リスナー誕生日管理tool</h1>
-    <button onclick="location.href='BD_GET.html'">誕生日入力ページへ</button>
-    <button onclick="location.href='view.html'">リスト表示へ</button>
+    <h1>あやか枠リスナー誕生日管理ツール</h1>
+
+    <div class="button-container">
+        <button onclick="location.href='BD_GET.html'">誕生日入力ページへ</button>
+        <div class="description">
+            リンク先でユーザー情報を入力してもらいます。<br>
+            パスワードは配信で伝え入力してもらうことで登録が実行されます。<br>
+            登録パスワードはBOT対策で必要です。
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button onclick="location.href='view.html'">リスト表示へ</button>
+        <div class="description">
+            入力してもらった誕生日のリストを閲覧します。<br>
+            デフォルトで当月が表示されます。<br>
+            必要に応じて表示月を変更もしくはALLを選択することで全て一覧で閲覧が可能になります。
+        </div>
+    </div>
 </body>
 </html>
-
