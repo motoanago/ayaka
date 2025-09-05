@@ -35,65 +35,59 @@
   <thead>
     <tr>
       <th>名前</th>
-      <th>誕生月</th>
       <th>誕生日</th>
-      <th>メモ</th>
+      <th>応援コメント</th>
     </tr>
   </thead>
-  <tbody>
-  </tbody>
+  <tbody></tbody>
 </table>
 
 <script>
-// スプレッドシートを公開して得られるJSON URL
-const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQf0Ztzp1T1Vf8nV7Dh4ZfR1lL7fWULe1P8RkK3pub1v7I5xQlKj4XkRdfJr6nH6dJ7RX/pub?output=csv";
+// Google Apps Scriptで作成したWeb APIのURLを入れてください
+const apiURL = "https://script.google.com/macros/s/AKfycbyNhPlSKc7TfRrdmjw5lE4mzrgGpqDfsDDtHe3ni8xF7shbpJj52fRN0MnVh9789Z7K/exec";
 
-// CSVを取得して解析する関数
-async function fetchSheetData() {
-  const res = await fetch(sheetURL);
-  const text = await res.text();
-  const rows = text.split("\n").map(r => r.split(","));
-  // ヘッダーを削除
-  rows.shift();
-  return rows.map(r => ({
-    name: r[0],
-    month: parseInt(r[1], 10),
-    day: parseInt(r[2], 10),
-    memo: r[3] || ""
-  }));
+let birthdayData = [];
+
+// データ取得
+async function fetchData() {
+  try {
+    const res = await fetch(apiURL);
+    const data = await res.json();
+    birthdayData = data;
+    displayData("ALL");
+  } catch(err) {
+    console.error("データ取得エラー:", err);
+    alert("データを取得できませんでした。");
+  }
 }
 
-// 表示関数
-function displayData(data, monthFilter) {
+// データ表示
+function displayData(monthFilter) {
   const tbody = document.querySelector("#birthdayTable tbody");
   tbody.innerHTML = "";
 
-  let filtered = data;
+  let filtered = birthdayData;
   if (monthFilter !== "ALL") {
-    filtered = data.filter(d => d.month === parseInt(monthFilter, 10));
+    filtered = birthdayData.filter(d => d.month === parseInt(monthFilter,10));
   }
 
-  // 月・日でソート
+  // 月日でソート
   filtered.sort((a,b) => a.month - b.month || a.day - b.day);
 
   for (const item of filtered) {
     const tr = document.createElement("tr");
-    tr.innerHTML = `<td>${item.name}</td><td>${item.month}</td><td>${item.day}</td><td>${item.memo}</td>`;
+    tr.innerHTML = `<td>${item.name}</td><td>${item.month}月${item.day}日</td><td>${item.memo}</td>`;
     tbody.appendChild(tr);
   }
 }
 
-// 初期表示
-let birthdayData = [];
-fetchSheetData().then(data => {
-  birthdayData = data;
-  displayData(birthdayData, "ALL");
-});
-
 // プルダウン変更時
 document.getElementById("monthSelect").addEventListener("change", e => {
-  displayData(birthdayData, e.target.value);
+  displayData(e.target.value);
 });
+
+// 初回取得
+fetchData();
 </script>
 
 </body>
