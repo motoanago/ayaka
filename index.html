@@ -16,6 +16,7 @@
     background-color: #f5f5f5;
     text-align: center;
   }
+
   .container {
     width: 100%;
     max-width: 400px;
@@ -24,12 +25,17 @@
     border-radius: 12px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   }
-  h2 { margin-bottom: 20px; }
+
+  h2 {
+    margin-bottom: 20px;
+  }
+
   label {
     display: block;
     margin-top: 10px;
     text-align: left;
   }
+
   input, textarea {
     width: 100%;
     margin-top: 5px;
@@ -39,7 +45,11 @@
     border-radius: 5px;
     border: 1px solid #ccc;
   }
-  textarea { height: 3em; }
+
+  textarea {
+    height: 3em;
+  }
+
   button {
     margin-top: 15px;
     padding: 10px 20px;
@@ -52,17 +62,32 @@
     width: 100%;
     transition: background-color 0.3s;
   }
-  button:hover { background-color: #45a049; }
+
+  button:hover {
+    background-color: #45a049;
+  }
+
   button:disabled {
     background-color: #aaa;
     cursor: not-allowed;
   }
+
   #result {
     margin-top: 20px;
     font-weight: bold;
     color: green;
     white-space: pre-line;
     text-align: center;
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      padding: 20px;
+    }
+
+    input, textarea, button {
+      font-size: 14px;
+    }
   }
 </style>
 </head>
@@ -92,15 +117,12 @@ form.addEventListener('submit', function(e) {
   const elements = form.querySelectorAll("input, textarea, button");
   elements.forEach(el => el.disabled = true);
 
-  const formData = new FormData(form);
-  const params = new URLSearchParams(formData);
+  const formData = Object.fromEntries(new FormData(form).entries()); // JSON形式に変換
 
-  fetch("https://script.google.com/macros/s/AKfycbyz1QuJiNVBP5XWbT0wFb6edybyb1IAQHz57H43VARxxQotzR_Li3DeBQpgILrEuLeZ/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbwvD8BOdqbjMeH_turiPQojBfYH1SJ_W5MpI1fdHArrb5CET3KhkBkhf0OobHc2fkI1/exec", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"  // ★追加
-    },
-    body: params.toString() // ★文字列化
+    headers: { "Content-Type": "application/json" }, // JSON送信
+    body: JSON.stringify(formData)                   // JSON文字列化
   })
   .then(res => res.json())
   .then(data => {
