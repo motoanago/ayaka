@@ -9,6 +9,11 @@
       font-family: sans-serif;
       padding: 10px;
     }
+    select {
+      font-size: 16px;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
     table {
       border-collapse: collapse;
       width: 100%;
@@ -24,7 +29,7 @@
       background-color: #ddd;
     }
 
-    /* 月ごとの背景色用 */
+    /* 月ごとの背景色 */
     .month-color-0 { background-color: #f9f9f9; }
     .month-color-1 { background-color: #e6f7ff; }
     .month-color-2 { background-color: #fff0f6; }
@@ -64,6 +69,27 @@
 </head>
 <body>
   <h1 style="text-align:center;">スプレッドシートのデータ</h1>
+
+  <!-- 月選択プルダウン -->
+  <div style="text-align:center;">
+    <label for="monthFilter">月で絞り込み: </label>
+    <select id="monthFilter">
+      <option value="ALL">ALL</option>
+      <option value="1">1月</option>
+      <option value="2">2月</option>
+      <option value="3">3月</option>
+      <option value="4">4月</option>
+      <option value="5">5月</option>
+      <option value="6">6月</option>
+      <option value="7">7月</option>
+      <option value="8">8月</option>
+      <option value="9">9月</option>
+      <option value="10">10月</option>
+      <option value="11">11月</option>
+      <option value="12">12月</option>
+    </select>
+  </div>
+
   <table id="data-table">
     <thead>
       <tr>
@@ -78,35 +104,51 @@
 
   <script>
     const apiUrl = 'https://script.google.com/macros/s/AKfycbwW-GruqKb2KFEJSdyOcqsu3g5wZd2jDZ3XMFmKwMQG1QMJ_fsuggJycapNvuC11yck/exec';
+    let allData = [];
 
+    // 今日の月をデフォルト選択
+    const todayMonth = new Date().getMonth() + 1;
+    const monthSelect = document.getElementById('monthFilter');
+    monthSelect.value = todayMonth;
+
+    // データ取得
     fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-        // B列（月）→ C列（日）の昇順でソート
-        data.sort((a, b) => {
+        // B列（月）→ C列（日）の昇順ソート
+        allData = data.sort((a, b) => {
           if (a.column2 === b.column2) return a.column3 - b.column3;
           return a.column2 - b.column2;
         });
-
-        const tbody = document.querySelector('#data-table tbody');
-
-        data.forEach(item => {
-          const tr = document.createElement('tr');
-
-          // 月ごとの色分け (0〜11で配色)
-          const monthIndex = (parseInt(item.column2) - 1) % 12;
-          tr.className = `month-color-${monthIndex}`;
-
-          tr.innerHTML = `
-            <td data-label="名前">${item.column1}</td>
-            <td data-label="月">${item.column2}</td>
-            <td data-label="日">${item.column3}</td>
-            <td data-label="コメント">${item.column4}</td>
-          `;
-          tbody.appendChild(tr);
-        });
+        renderTable(); // 初期表示
       })
-      .catch(error => console.error('データの取得に失敗しました:', error));
+      .catch(error => console.error('データ取得失敗:', error));
+
+    // プルダウン変更時に表示更新
+    monthSelect.addEventListener('change', renderTable);
+
+    function renderTable() {
+      const tbody = document.querySelector('#data-table tbody');
+      tbody.innerHTML = ''; // 既存行クリア
+
+      const selectedMonth = monthSelect.value;
+      const filteredData = selectedMonth === 'ALL' 
+        ? allData 
+        : allData.filter(item => parseInt(item.column2) === parseInt(selectedMonth));
+
+      filteredData.forEach(item => {
+        const tr = document.createElement('tr');
+        const monthIndex = (parseInt(item.column2) - 1) % 12;
+        tr.className = `month-color-${monthIndex}`;
+        tr.innerHTML = `
+          <td data-label="名前">${item.column1}</td>
+          <td data-label="月">${item.column2}</td>
+          <td data-label="日">${item.column3}</td>
+          <td data-label="コメント">${item.column4}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
   </script>
 </body>
 </html>
