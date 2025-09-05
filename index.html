@@ -54,7 +54,6 @@ button:disabled { background-color: #aaa; cursor: not-allowed; }
 </style>
 </head>
 <body>
-
 <div class="container">
   <h2>あやか推し！</h2>
   <h2>お名前と誕生日を入力してね</h2>
@@ -74,8 +73,8 @@ button:disabled { background-color: #aaa; cursor: not-allowed; }
 const form = document.getElementById('birthdayForm');
 const result = document.getElementById('result');
 
-// ここにデプロイ済み Web Apps URL を入れる
-const GAS_URL = "https://script.google.com/macros/s/AKfycbwnbpUx0eA_I4hhvU0xE77h2neYozg_YRYxNTy7JTGgfjEPmctSmxiDxlEm0D2dp6Nn/exec";
+// デプロイ済み Web Apps URL を入力
+const GAS_URL = "https://script.google.com/macros/s/AKfycbyQBBEsunC42BJBaNoRhddqj4WJuEr8kotiUXPJF_2ZustphqRnxLuDElRcC1MT6DV-/exec";
 
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
@@ -97,22 +96,24 @@ form.addEventListener('submit', async function(e) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
     });
+
     const json = await res.json();
+
     if(json.status === "success") {
       form.style.display = "none";
+      result.style.color = "green";
       result.textContent = "登録が完了したよ\n教えてくれてありがとう\n誕生日は一緒に祝おうね！";
     } else {
-      result.textContent = "送信失敗: " + json.message;
       result.style.color = "red";
+      result.textContent = "送信失敗: " + json.message;
       elements.forEach(el => el.disabled = false);
     }
   } catch(err) {
-    result.textContent = "通信エラー: " + err;
     result.style.color = "red";
+    result.textContent = "通信エラー: " + err;
     elements.forEach(el => el.disabled = false);
   }
 });
 </script>
-
 </body>
 </html>
