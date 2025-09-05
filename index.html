@@ -5,50 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>誕生日入力フォーム</title>
 <style>
-body {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  background-color: #f2f2f2;
-}
+body { font-family: Arial, sans-serif; padding: 20px; background-color: #f2f2f2; }
 h2 { text-align: center; color: #333; }
-form {
-  max-width: 400px;
-  margin: 0 auto;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
+form { max-width: 400px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 label { display: block; margin-bottom: 15px; font-size: 16px; }
-input[type="text"], input[type="number"] {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  box-sizing: border-box;
-}
-button {
-  width: 100%;
-  padding: 12px;
-  font-size: 18px;
-  background-color: #4CAF50;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
-input:disabled, button:disabled {
-  background-color: #ddd;
-  cursor: not-allowed;
-}
-#result {
-  margin-top: 20px;
-  text-align: center;
-  font-weight: bold;
-  white-space: pre-line; /* 改行を反映 */
-  font-size: 18px;
-}
+input[type="text"], input[type="number"] { width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+button { width: 100%; padding: 12px; font-size: 18px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; cursor: pointer; }
+input:disabled, button:disabled { background-color: #ddd; cursor: not-allowed; }
+#result { margin-top: 20px; text-align: center; font-weight: bold; white-space: pre-line; font-size: 18px; }
 </style>
 </head>
 <body>
@@ -84,7 +48,7 @@ form.addEventListener('submit', function(e) {
   // 送信直後に入力欄とボタンをグレーアウト
   Array.from(form.elements).forEach(el => el.disabled = true);
 
-  fetch("https://script.google.com/macros/s/AKfycbxKXKyw2HE8b8pTT5BrRMCk5SCjF09KJDPTsDGEW9TReNxMsUxFk08hk5xTLzZ49o5a/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbyj2K_v0ni3tbZ2ATlwZKN8buhYCq7HkgW8LVp2LDe5CSZGwxAsclW0jEBn4jalffel/exec", {
     method: "POST",
     body: params
   })
@@ -97,7 +61,7 @@ form.addEventListener('submit', function(e) {
       // 名前を1行目に入れたメッセージを表示
       result.textContent = nameValue + "\n教えてくれてありがとう♪\nこれからもよろしくね☆\n誕生日は一緒に祝おうね！";
     } else {
-      // エラー表示
+      // パスワード間違いまたはその他エラー
       result.textContent = data.message ? data.message : "送信失敗";
       submitted = false;
       // 入力欄とボタンを再び有効化
