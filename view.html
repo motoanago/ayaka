@@ -5,9 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Google Sheets Data</title>
   <style>
+    body {
+      font-family: sans-serif;
+      padding: 10px;
+    }
     table {
       border-collapse: collapse;
       width: 100%;
+      max-width: 600px;
+      margin: auto;
     }
     th, td {
       border: 1px solid #333;
@@ -15,12 +21,49 @@
       text-align: left;
     }
     th {
-      background-color: #f0f0f0;
+      background-color: #ddd;
+    }
+
+    /* 月ごとの背景色用 */
+    .month-color-0 { background-color: #f9f9f9; }
+    .month-color-1 { background-color: #e6f7ff; }
+    .month-color-2 { background-color: #fff0f6; }
+    .month-color-3 { background-color: #f6ffed; }
+    .month-color-4 { background-color: #fffbe6; }
+    .month-color-5 { background-color: #f9f0ff; }
+    .month-color-6 { background-color: #fff1f0; }
+    .month-color-7 { background-color: #e6fffb; }
+    .month-color-8 { background-color: #f0f5ff; }
+    .month-color-9 { background-color: #fff7e6; }
+    .month-color-10 { background-color: #f6ffed; }
+    .month-color-11 { background-color: #fff0f6; }
+
+    /* スマホ対応 */
+    @media screen and (max-width: 600px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+      }
+      thead tr {
+        display: none;
+      }
+      td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        margin-bottom: 8px;
+      }
+      td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        font-weight: bold;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>誕生日リスト</h1>
+  <h1 style="text-align:center;">スプレッドシートのデータ</h1>
   <table id="data-table">
     <thead>
       <tr>
@@ -41,20 +84,24 @@
       .then(data => {
         // B列（月）→ C列（日）の昇順でソート
         data.sort((a, b) => {
-          if (a.column2 === b.column2) {
-            return a.column3 - b.column3; // 月が同じなら日で比較
-          }
-          return a.column2 - b.column2; // 月で比較
+          if (a.column2 === b.column2) return a.column3 - b.column3;
+          return a.column2 - b.column2;
         });
 
         const tbody = document.querySelector('#data-table tbody');
+
         data.forEach(item => {
           const tr = document.createElement('tr');
+
+          // 月ごとの色分け (0〜11で配色)
+          const monthIndex = (parseInt(item.column2) - 1) % 12;
+          tr.className = `month-color-${monthIndex}`;
+
           tr.innerHTML = `
-            <td>${item.column1}</td>
-            <td>${item.column2}</td>
-            <td>${item.column3}</td>
-            <td>${item.column4}</td>
+            <td data-label="名前">${item.column1}</td>
+            <td data-label="月">${item.column2}</td>
+            <td data-label="日">${item.column3}</td>
+            <td data-label="コメント">${item.column4}</td>
           `;
           tbody.appendChild(tr);
         });
