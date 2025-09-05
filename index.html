@@ -5,74 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>誕生日メモ入力フォーム</title>
 <style>
-body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  background-color: #f5f5f5;
-  text-align: center;
-}
-.container {
-  width: 100%;
-  max-width: 400px;
-  background: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-}
+body { font-family: sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; background-color: #f5f5f5; text-align: center; }
+.container { width: 100%; max-width: 400px; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
 h2 { margin-bottom: 20px; }
 label { display: block; margin-top: 10px; text-align: left; }
-input, textarea {
-  width: 100%;
-  margin-top: 5px;
-  padding: 8px;
-  box-sizing: border-box;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
+input, textarea { width: 100%; margin-top: 5px; padding: 8px; box-sizing: border-box; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; }
 textarea { height: 3em; }
-
-/* ボタン */
-button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 6px;
-  background-color: #4CAF50;
-  color: #fff;
-  cursor: pointer;
-  width: 100%;
-  transition: background-color 0.3s, transform 0.2s;
-}
-button:hover {
-  background-color: #45a049;
-  transform: scale(1.03);
-}
-button:disabled {
-  background-color: #aaa;
-  cursor: not-allowed;
-}
-
-#result {
-  margin-top: 20px;
-  font-weight: bold;
-  color: green;
-  white-space: pre-line;
-  text-align: center;
-}
+button { margin-top: 15px; padding: 10px 20px; font-size: 16px; border: none; border-radius: 6px; background-color: #4CAF50; color: #fff; cursor: pointer; width: 100%; transition: background-color 0.3s, transform 0.2s; }
+button:hover { background-color: #45a049; transform: scale(1.03); }
+button:disabled { background-color: #aaa; cursor: not-allowed; }
+#result { margin-top: 20px; font-weight: bold; color: green; white-space: pre-line; text-align: center; }
 </style>
 </head>
 <body>
 <div class="container">
-  <h2>あやか推し？</h2>
-  <h2>お名前と誕生日を教えて</h2>
-
+  <h2>あやか推し！</h2>
+  <h2>お名前と誕生日を入力してね</h2>
   <form id="birthdayForm">
     <label>名前: <input type="text" name="name" required></label>
     <label>誕生月: <input type="number" name="month" min="1" max="12" required></label>
@@ -80,16 +28,14 @@ button:disabled {
     <label>応援コメ: <textarea name="memo"></textarea></label>
     <button type="submit">あやかに教える</button>
   </form>
-
   <p id="result"></p>
 </div>
 
 <script>
-// デプロイ済み Web Apps URL
-const GAS_URL = "https://script.google.com/macros/s/AKfycbwtRfUfIyCrH2kPIe3USBWTFclI7XKE58suhsjas4JY__msSCLkBEXJ7l5CRmcjrE5h/exec";
-
 const form = document.getElementById('birthdayForm');
 const result = document.getElementById('result');
+// ここにデプロイした Web Apps URL を貼る
+const GAS_URL = "https://script.google.com/macros/s/AKfycbxCxyBxM2Kh0qTR_K3wd1ZIm4ZDBFBHOAgXY1YvKViNBncnBjaR3N_rglbAwzpNZrV5/exec";
 
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
@@ -113,7 +59,6 @@ form.addEventListener('submit', async function(e) {
     });
 
     const json = await res.json();
-
     if(json.status === "success") {
       form.style.display = "none";
       result.style.color = "green";
@@ -125,12 +70,10 @@ form.addEventListener('submit', async function(e) {
     }
   } catch(err) {
     result.style.color = "red";
-    result.textContent = "通信エラー: " + (err.message || err) + "\n※GitHub Pages等HTTPS上で開いてください";
+    result.textContent = "通信エラー: " + (err.message || err) + "\n※HTTPS上で開いてください";
     elements.forEach(el => el.disabled = false);
   }
 });
 </script>
 </body>
 </html>
-
-
