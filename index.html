@@ -61,6 +61,7 @@
 <body>
   <div class="form-container">
     <h2>応援コメントフォーム</h2>
+    <h2>応援コメントフォーム</h2>
     <form id="supportForm">
       <label for="name">名前:</label>
       <input type="text" id="name" name="name" required>
@@ -94,7 +95,7 @@
       };
 
       try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbyoL0-Yark9zK53bXEdcMWGYlwdTb_g5WQRGtlkk1ppgRRqVFWPKMfcfw_7cRw0aX2w/exec", {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbzD8NTRAg21HAPF9a1qvEc9Wp4KT15Yd106JkAwCf3dJOyeJcyMImCGKDpAntcBUxl1/exec", {
           method: "POST",
           body: JSON.stringify(data),
           headers: { "Content-Type": "application/json" }
