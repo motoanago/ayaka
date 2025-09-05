@@ -7,32 +7,6 @@
 </head>
 <body>
   <h2>誕生日メモ入力フォーム</h2>
-  <form id="birthdayForm">
-    <label>名前: <input type="text" name="name" required></label><br>
-    <label>誕生月: <input type="number" name="month" min="1" max="12" required></label><br>
-    <label>誕生日: <input type="number" name="day" min="1" max="31" required></label><br>
-    <label>メモ: <input type="text" name="memo"></label><br>
-    <button type="submit">送信</button>
-  </form>
-
-  <p id="result"></p>
-
-  <script>
-    const form = document.getElementById('birthdayForm');
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      const formData = new FormData(form);
-      const params = new URLSearchParams(formData);
-
-      fetch("<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>誕生日メモ入力フォーム</title>
-</head>
-<body>
   <h2>誕生日メモ入力フォーム</h2>
   <form id="birthdayForm">
     <label>名前: <input type="text" name="name" required></label><br>
@@ -52,27 +26,7 @@
       const formData = new FormData(form);
       const params = new URLSearchParams(formData);
 
-      fetch("https://script.google.com/macros/s/AKfycbxZHQfwMecBpwsujAeYRaD-aCEOgIMGAcDI2sm9UmGcyRMhpLK_e333Ms0lVz5vS7NK/exec", {
-        method: "POST",
-        body: params
-      })
-      .then(res => res.json())
-      .then(data => {
-        if(data.status === "success") {
-          document.getElementById("result").textContent = "送信成功！";
-          form.reset();
-        } else {
-          document.getElementById("result").textContent = "送信失敗: " + data.message;
-        }
-      })
-      .catch(err => {
-        document.getElementById("result").textContent = "通信エラー: " + err;
-      });
-    });
-  </script>
-</body>
-</html>
-", {
+      fetch("https://script.google.com/macros/s/AKfycbxKXKyw2HE8b8pTT5BrRMCk5SCjF09KJDPTsDGEW9TReNxMsUxFk08hk5xTLzZ49o5a/exec", {
         method: "POST",
         body: params
       })
