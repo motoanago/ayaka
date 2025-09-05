@@ -38,6 +38,10 @@ button {
   border-radius: 6px;
   cursor: pointer;
 }
+input:disabled, button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
 #result {
   margin-top: 20px;
   text-align: center;
@@ -57,6 +61,7 @@ button {
   <label>誕生月: <input type="number" name="month" min="1" max="12" required></label>
   <label>誕生日: <input type="number" name="day" min="1" max="31" required></label>
   <label>応援コメント: <input type="text" name="memo"></label>
+  <label>BOT対策パスワード: <input type="text" name="password" required></label>
   <button type="submit">あやかに教える</button>
 </form>
 
@@ -74,7 +79,7 @@ form.addEventListener('submit', function(e) {
 
   const formData = new FormData(form);
   const params = new URLSearchParams(formData);
-  const nameValue = formData.get('name'); // 名前欄の文字列を取得
+  const nameValue = formData.get('name');
 
   // 送信直後に入力欄とボタンをグレーアウト
   Array.from(form.elements).forEach(el => el.disabled = true);
@@ -89,13 +94,13 @@ form.addEventListener('submit', function(e) {
       // タイトルとフォームを非表示
       document.querySelectorAll('h2').forEach(h => h.style.display = 'none');
       form.style.display = 'none';
-
       // 名前を1行目に入れたメッセージを表示
       result.textContent = nameValue + "\n教えてくれてありがとう♪\nこれからもよろしくね☆\n誕生日は一緒に祝おうね！";
     } else {
-      result.textContent = "送信失敗: " + data.message;
+      // エラー表示
+      result.textContent = data.message ? data.message : "送信失敗";
       submitted = false;
-      // 失敗なら入力を再び有効化
+      // 入力欄とボタンを再び有効化
       Array.from(form.elements).forEach(el => el.disabled = false);
     }
   })
