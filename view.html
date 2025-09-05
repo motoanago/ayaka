@@ -14,6 +14,7 @@
 <body>
 
 <h2>誕生日リスト</h2>
+
 <label for="monthSelect">月を選択:</label>
 <select id="monthSelect">
   <option value="ALL">ALL</option>
@@ -36,15 +37,14 @@
     <tr>
       <th>名前</th>
       <th>誕生日</th>
-      <th>応援コメント</th>
+      <th>メモ</th>
     </tr>
   </thead>
   <tbody></tbody>
 </table>
 
 <script>
-// Google Apps Scriptで作成したWeb APIのURLを入れてください
-const apiURL = "https://script.google.com/macros/s/AKfycbyNhPlSKc7TfRrdmjw5lE4mzrgGpqDfsDDtHe3ni8xF7shbpJj52fRN0MnVh9789Z7K/exec";
+const apiURL = "https://script.google.com/macros/s/AKfycbxqz6mBCZrMioqnBY70R1Tv3dY6GYvAKVn9OfVBWlE_gLC3otbfsB2BrIwNGrw0b2xn/exec";
 
 let birthdayData = [];
 
@@ -55,13 +55,13 @@ async function fetchData() {
     const data = await res.json();
     birthdayData = data;
     displayData("ALL");
-  } catch(err) {
+  } catch (err) {
     console.error("データ取得エラー:", err);
     alert("データを取得できませんでした。");
   }
 }
 
-// データ表示
+// 表示関数
 function displayData(monthFilter) {
   const tbody = document.querySelector("#birthdayTable tbody");
   tbody.innerHTML = "";
@@ -71,7 +71,6 @@ function displayData(monthFilter) {
     filtered = birthdayData.filter(d => d.month === parseInt(monthFilter,10));
   }
 
-  // 月日でソート
   filtered.sort((a,b) => a.month - b.month || a.day - b.day);
 
   for (const item of filtered) {
@@ -86,7 +85,7 @@ document.getElementById("monthSelect").addEventListener("change", e => {
   displayData(e.target.value);
 });
 
-// 初回取得
+// 初回表示
 fetchData();
 </script>
 
