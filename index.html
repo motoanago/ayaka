@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>誕生日メモ入力フォーム</title>
+<title>誕生日入力フォーム</title>
 <style>
 body {
   font-family: Arial, sans-serif;
@@ -50,7 +50,7 @@ button {
 <body>
 <h2>あやか推し</h2>
 <h2>誕生日を教えてね</h2>
-<h2>入力してね</h2>
+
 <form id="birthdayForm">
   <label>名前: <input type="text" name="name" required></label>
   <label>誕生月: <input type="number" name="month" min="1" max="12" required></label>
@@ -82,10 +82,12 @@ form.addEventListener('submit', function(e) {
   .then(res => res.json())
   .then(data => {
     if(data.status === "success") {
-      // フォーム自体を非表示
+      // フォームを非表示
       form.style.display = 'none';
-      // 名前欄を1行目に入れたメッセージを表示
-      result.textContent = nameValue + "\n教えてくれてありがと\nこれからもよろしくね\n誕生日は一緒に祝おうね！";
+      // ページ上のすべての h2 タイトルを非表示
+      document.querySelectorAll('h2').forEach(h => h.style.display = 'none');
+      // 名前を1行目に入れたメッセージを表示
+      result.textContent = nameValue + "\n教えてくれてありがとう\nこれからもよろしくね\n誕生日は一緒に祝おうね！";
     } else {
       result.textContent = "送信失敗: " + data.message;
       submitted = false;
@@ -99,4 +101,3 @@ form.addEventListener('submit', function(e) {
 </script>
 </body>
 </html>
-
