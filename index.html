@@ -27,10 +27,6 @@ input[type="text"], input[type="number"] {
   border: 1px solid #ccc;
   border-radius: 6px;
   box-sizing: border-box;
-  transition: background-color 0.3s;
-}
-input:disabled {
-  background-color: #ddd;
 }
 button {
   width: 100%;
@@ -41,11 +37,6 @@ button {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s;
-}
-button:disabled {
-  background-color: #999;
-  cursor: not-allowed;
 }
 #result {
   margin-top: 20px;
@@ -83,9 +74,9 @@ form.addEventListener('submit', function(e) {
 
   const formData = new FormData(form);
   const params = new URLSearchParams(formData);
-  const nameValue = formData.get('name');
+  const nameValue = formData.get('name'); // 名前欄の文字列を取得
 
-  // 送信直後にフォームの入力欄とボタンをグレーアウト
+  // 送信直後に入力欄とボタンをグレーアウト
   Array.from(form.elements).forEach(el => el.disabled = true);
 
   fetch("https://script.google.com/macros/s/AKfycbxKXKyw2HE8b8pTT5BrRMCk5SCjF09KJDPTsDGEW9TReNxMsUxFk08hk5xTLzZ49o5a/exec", {
@@ -95,7 +86,11 @@ form.addEventListener('submit', function(e) {
   .then(res => res.json())
   .then(data => {
     if(data.status === "success") {
-      // 名前を1行目に入れた固定メッセージを表示
+      // タイトルとフォームを非表示
+      document.querySelectorAll('h2').forEach(h => h.style.display = 'none');
+      form.style.display = 'none';
+
+      // 名前を1行目に入れたメッセージを表示
       result.textContent = nameValue + "\n教えてくれてありがとう♪\nこれからもよろしくね☆\n誕生日は一緒に祝おうね！";
     } else {
       result.textContent = "送信失敗: " + data.message;
