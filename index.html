@@ -49,7 +49,8 @@ button {
 </head>
 <body>
 <h2>あやか推し</h2>
-<h2>誕生日を教えてね</h2>
+<h2>キミの誕生日を教えてね</h2>
+<h2>リスナー名も書いてね</h2>
 
 <form id="birthdayForm">
   <label>名前: <input type="text" name="name" required></label>
@@ -87,7 +88,7 @@ form.addEventListener('submit', function(e) {
       // ページ上のすべての h2 タイトルを非表示
       document.querySelectorAll('h2').forEach(h => h.style.display = 'none');
       // 名前を1行目に入れたメッセージを表示
-      result.textContent = nameValue + "\n教えてくれてありがとう\nこれからもよろしくね\n誕生日は一緒に祝おうね！";
+      result.textContent = nameValue + "\n教えてくれてありがとう♪\nこれからもよろしくね☆\n誕生日は一緒に祝おうね！";
     } else {
       result.textContent = "送信失敗: " + data.message;
       submitted = false;
@@ -101,3 +102,4 @@ form.addEventListener('submit', function(e) {
 </script>
 </body>
 </html>
+
