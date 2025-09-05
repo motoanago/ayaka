@@ -36,6 +36,8 @@ input, textarea {
   border: 1px solid #ccc;
 }
 textarea { height: 3em; }
+
+/* 送信ボタン */
 button {
   margin-top: 15px;
   padding: 10px 20px;
@@ -44,19 +46,33 @@ button {
   border-radius: 6px;
   background-color: #4CAF50;
   color: #fff;
-  cursor: pointer;
+  cursor: pointer; /* ポインタ */
   width: 100%;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.2s; /* アニメーション */
 }
-button:hover { background-color: #45a049; }
-button:disabled { background-color: #aaa; cursor: not-allowed; }
-#result { margin-top: 20px; font-weight: bold; color: green; white-space: pre-line; text-align: center; }
+button:hover {
+  background-color: #45a049;
+  cursor: pointer; /* ホバー時ポインタ */
+  transform: scale(1.03); /* 少し拡大 */
+}
+button:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+#result {
+  margin-top: 20px;
+  font-weight: bold;
+  color: green;
+  white-space: pre-line;
+  text-align: center;
+}
 </style>
 </head>
 <body>
 <div class="container">
   <h2>あやか推し！</h2>
-  <h2>お名前と誕生日を入力してね</h2>
+  <h2>お名前と誕生日を教えてね</h2>
 
   <form id="birthdayForm">
     <label>名前: <input type="text" name="name" required></label>
@@ -73,8 +89,8 @@ button:disabled { background-color: #aaa; cursor: not-allowed; }
 const form = document.getElementById('birthdayForm');
 const result = document.getElementById('result');
 
-// デプロイ済み Web Apps URL を入力
-const GAS_URL = "https://script.google.com/macros/s/AKfycbzMhXfrefRbYzoTcjDaARtVGuElooZETaG7bo7TQ9VhEGnCCPwXswzaYqDRMgKf9Li_/exec";
+// デプロイ済み Web Apps URL
+const GAS_URL = "https://script.google.com/macros/s/AKfycbx3rQpm2xwj4yf5He2R41eQDh44nC5QecybzFEqNnBHZZJYuOppH0Uf0x_qpz_n3ipu/exec";
 
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
@@ -93,7 +109,7 @@ form.addEventListener('submit', async function(e) {
     const res = await fetch(GAS_URL, {
       method: "POST",
       mode: "cors",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json; charset=UTF-8" },
       body: JSON.stringify(data)
     });
 
@@ -110,11 +126,10 @@ form.addEventListener('submit', async function(e) {
     }
   } catch(err) {
     result.style.color = "red";
-    result.textContent = "通信エラー: " + err;
+    result.textContent = "通信エラー: " + (err.message || err);
     elements.forEach(el => el.disabled = false);
   }
 });
 </script>
 </body>
 </html>
-
