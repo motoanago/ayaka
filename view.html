@@ -4,26 +4,62 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Google Sheets Data</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #333;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+  </style>
 </head>
 <body>
-  <h1>スプレッドシートのデータ</h1>
-  <ul id="data-list"></ul>
+  <h1>誕生日リスト</h1>
+  <table id="data-table">
+    <thead>
+      <tr>
+        <th>名前</th>
+        <th>月</th>
+        <th>日</th>
+        <th>コメント</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
   <script>
     const apiUrl = 'https://script.google.com/macros/s/AKfycbwW-GruqKb2KFEJSdyOcqsu3g5wZd2jDZ3XMFmKwMQG1QMJ_fsuggJycapNvuC11yck/exec';
 
     fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-        const list = document.getElementById('data-list');
+        // B列（月）→ C列（日）の昇順でソート
+        data.sort((a, b) => {
+          if (a.column2 === b.column2) {
+            return a.column3 - b.column3; // 月が同じなら日で比較
+          }
+          return a.column2 - b.column2; // 月で比較
+        });
+
+        const tbody = document.querySelector('#data-table tbody');
         data.forEach(item => {
-          const li = document.createElement('li');
-          li.textContent = `${item.column1} - ${item.column2} - ${item.column3} - ${item.column4}`;
-          list.appendChild(li);
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${item.column1}</td>
+            <td>${item.column2}</td>
+            <td>${item.column3}</td>
+            <td>${item.column4}</td>
+          `;
+          tbody.appendChild(tr);
         });
       })
       .catch(error => console.error('データの取得に失敗しました:', error));
   </script>
 </body>
 </html>
-
-
