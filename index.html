@@ -48,7 +48,7 @@ form.addEventListener('submit', function(e) {
   // 送信直後に入力欄とボタンをグレーアウト
   Array.from(form.elements).forEach(el => el.disabled = true);
 
-  fetch("https://script.google.com/macros/s/AKfycbyj2K_v0ni3tbZ2ATlwZKN8buhYCq7HkgW8LVp2LDe5CSZGwxAsclW0jEBn4jalffel/exec", {
+  fetch("https://script.google.com/macros/s/AKfycbxKXKyw2HE8b8pTT5BrRMCk5SCjF09KJDPTsDGEW9TReNxMsUxFk08hk5xTLzZ49o5a/exec", {
     method: "POST",
     body: params
   })
