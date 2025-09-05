@@ -31,17 +31,17 @@
 
     /* 月ごとの背景色 */
     .month-color-0 { background-color: #f9f9f9; }
-    .month-color-1 { background-color: #e6f7ff; }
-    .month-color-2 { background-color: #fff0f6; }
-    .month-color-3 { background-color: #f6ffed; }
-    .month-color-4 { background-color: #fffbe6; }
+    .month-color-1 { background-color: #f9f0ff; }
+    .month-color-2 { background-color: #f9f9f9; }
+    .month-color-3 { background-color: #f9f0ff; }
+    .month-color-4 { background-color: #f9f9f9; }
     .month-color-5 { background-color: #f9f0ff; }
-    .month-color-6 { background-color: #fff1f0; }
-    .month-color-7 { background-color: #e6fffb; }
-    .month-color-8 { background-color: #f0f5ff; }
-    .month-color-9 { background-color: #fff7e6; }
-    .month-color-10 { background-color: #f6ffed; }
-    .month-color-11 { background-color: #fff0f6; }
+    .month-color-6 { background-color: #f9f9f9; }
+    .month-color-7 { background-color: #f9f0ff; }
+    .month-color-8 { background-color: #f9f9f9; }
+    .month-color-9 { background-color: #f9f0ff; }
+    .month-color-10 { background-color: #f9f9f9; }
+    .month-color-11 { background-color: #f9f0ff; }
 
     /* スマホ対応 */
     @media screen and (max-width: 600px) {
@@ -68,11 +68,11 @@
   </style>
 </head>
 <body>
-  <h1 style="text-align:center;">スプレッドシートのデータ</h1>
+  <h1 style="text-align:center;">リスナー誕生日一覧</h1>
 
   <!-- 月選択プルダウン -->
   <div style="text-align:center;">
-    <label for="monthFilter">月で絞り込み: </label>
+    <label for="monthFilter">月で絞り込み（全て表示はALLを選択: </label>
     <select id="monthFilter">
       <option value="ALL">ALL</option>
       <option value="1">1月</option>
@@ -93,7 +93,7 @@
   <table id="data-table">
     <thead>
       <tr>
-        <th>名前</th>
+        <th>リスナー名</th>
         <th>月</th>
         <th>日</th>
         <th>コメント</th>
@@ -152,3 +152,4 @@
   </script>
 </body>
 </html>
+
