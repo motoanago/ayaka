@@ -37,7 +37,7 @@ input, textarea {
 }
 textarea { height: 3em; }
 
-/* 送信ボタン */
+/* ボタン */
 button {
   margin-top: 15px;
   padding: 10px 20px;
@@ -46,14 +46,13 @@ button {
   border-radius: 6px;
   background-color: #4CAF50;
   color: #fff;
-  cursor: pointer; /* ポインタ */
+  cursor: pointer;
   width: 100%;
-  transition: background-color 0.3s, transform 0.2s; /* アニメーション */
+  transition: background-color 0.3s, transform 0.2s;
 }
 button:hover {
   background-color: #45a049;
-  cursor: pointer; /* ホバー時ポインタ */
-  transform: scale(1.03); /* 少し拡大 */
+  transform: scale(1.03);
 }
 button:disabled {
   background-color: #aaa;
@@ -72,7 +71,7 @@ button:disabled {
 <body>
 <div class="container">
   <h2>あやか推し！</h2>
-  <h2>お名前と誕生日を教えてね</h2>
+  <h2>お名前と誕生日を入力して</h2>
 
   <form id="birthdayForm">
     <label>名前: <input type="text" name="name" required></label>
@@ -86,11 +85,11 @@ button:disabled {
 </div>
 
 <script>
-const form = document.getElementById('birthdayForm');
-const result = document.getElementById('result');
-
 // デプロイ済み Web Apps URL
 const GAS_URL = "https://script.google.com/macros/s/AKfycbx3rQpm2xwj4yf5He2R41eQDh44nC5QecybzFEqNnBHZZJYuOppH0Uf0x_qpz_n3ipu/exec";
+
+const form = document.getElementById('birthdayForm');
+const result = document.getElementById('result');
 
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
@@ -126,7 +125,7 @@ form.addEventListener('submit', async function(e) {
     }
   } catch(err) {
     result.style.color = "red";
-    result.textContent = "通信エラー: " + (err.message || err);
+    result.textContent = "通信エラー: " + (err.message || err) + "\n※GitHub Pages等HTTPS上で開いてください";
     elements.forEach(el => el.disabled = false);
   }
 });
